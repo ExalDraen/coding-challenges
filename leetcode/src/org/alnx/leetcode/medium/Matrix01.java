@@ -1,4 +1,4 @@
-package org.alnx.leetcode.easy;
+package org.alnx.leetcode.medium;
 
 import java.util.*;
 
