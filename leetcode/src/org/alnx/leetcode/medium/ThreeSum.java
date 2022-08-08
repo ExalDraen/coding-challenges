@@ -26,11 +26,11 @@ public class ThreeSum {
         // this way we tighten the bound until we either find a match or cross or >
         List<List<Integer>> ret = new ArrayList<>();
         Arrays.sort(nums);
-        for (int i=0;i<nums.length;i++) {
+        for (int i = 0; i < nums.length; i++) {
             if (nums[i] > 0) {
                 break;  // can't get anymore zero sums, everything else is >0
             }
-            if (i == 0 || nums[i-1] != nums[i]) {  // skip duplicates
+            if (i == 0 || nums[i - 1] != nums[i]) {  // skip duplicates
                 twoSumTwoPointers(nums, i, ret);
             }
         }
@@ -40,7 +40,7 @@ public class ThreeSum {
     private static void twoSumTwoPointers(int[] nums, int i, List<List<Integer>> res) {
         int complement = nums[i];
         int start = i + 1;
-        int end = nums.length -1;
+        int end = nums.length - 1;
         while (start < end) {
             int sum = nums[start] + nums[end] + complement;
             if (sum == 0) {
@@ -49,7 +49,7 @@ public class ThreeSum {
                 start++;
                 end--;
                 // if there's dupes following this item, skip them
-                while (start < end && nums[start] ==  nums[start-1]) {
+                while (start < end && nums[start] == nums[start - 1]) {
                     start++;
                 }
             } else if (sum < 0) {
