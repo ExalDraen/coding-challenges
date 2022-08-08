@@ -17,25 +17,36 @@ public class BSTLevelOrder {
         var q = new ArrayDeque<TreeNode>();
         q.add(root);
         int level = 0;
-        while(!q.isEmpty()) {
+        while (!q.isEmpty()) {
             var sub = new ArrayList<Integer>();
             int level_length = q.size();
-            for (int i=0;i<level_length;i++) {
+            for (int i = 0; i < level_length; i++) {
                 var cur = q.pop();
                 sub.add(cur.val);
-                if (cur.left != null) {q.add(cur.left);}
-                if (cur.right != null) {q.add(cur.right);}
+                if (cur.left != null) {
+                    q.add(cur.left);
+                }
+                if (cur.right != null) {
+                    q.add(cur.right);
+                }
             }
             ret.add(sub);
         }
         return ret;
     }
+
     static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
-        TreeNode() {}
-        TreeNode(int val) { this.val = val; }
+
+        TreeNode() {
+        }
+
+        TreeNode(int val) {
+            this.val = val;
+        }
+
         TreeNode(int val, TreeNode left, TreeNode right) {
             this.val = val;
             this.left = left;
