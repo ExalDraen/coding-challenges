@@ -13,10 +13,59 @@ public class ThreeSum {
     }
 
     private static void printTc(int[] nums) {
-        System.out.printf("Input: %s\nOutput: %s\n\n", Arrays.toString(nums), threeSum(nums));
+        System.out.printf("[Set] Input: %s\n      Output: %s\n", Arrays.toString(nums), threeSumHashSet(nums));
+        System.out.printf("[2P ] Input: %s\n      Output: %s\n\n", Arrays.toString(nums), threeSumTwoPointers(nums));
+    }
+
+    public static List<List<Integer>> threeSumTwoPointers(int[] nums) {
+        // sort array
+
+        // two pointers: one at head, one at tail
+        // look at all elements between pointers: if they sum to 0 -> success
+        // otherwise if sum < target, increment lower pointer, if sum > target decrement higher
+        // this way we tighten the bound until we either find a match or cross or >
+        List<List<Integer>> ret = new ArrayList<>();
+        Arrays.sort(nums);
+        for (int i=0;i<nums.length;i++) {
+            if (nums[i] > 0) {
+                break;  // can't get anymore zero sums, everything else is >0
+            }
+            if (i == 0 || nums[i-1] != nums[i]) {  // skip duplicates
+                twoSumTwoPointers(nums, i, ret);
+            }
+        }
+        return ret;
+    }
+
+    private static void twoSumTwoPointers(int[] nums, int i, List<List<Integer>> res) {
+        int complement = nums[i];
+        int start = i + 1;
+        int end = nums.length -1;
+        while (start < end) {
+            int sum = nums[start] + nums[end] + complement;
+            if (sum == 0) {
+                // found a match
+                res.add(List.of(nums[start], nums[end], complement));
+                start++;
+                end--;
+                // if there's dupes following this item, skip them
+                while (start < end && nums[start] ==  nums[start-1]) {
+                    start++;
+                }
+            } else if (sum < 0) {
+                start++;
+            } else {
+                end--;
+            }
+        }
     }
 
     public static List<List<Integer>> threeSum(int[] nums) {
+        //return threeSumHashSet(nums);
+        return threeSumTwoPointers(nums);
+    }
+
+    private static List<List<Integer>> threeSumHashSet(int[] nums) {
         // all triplets (i,j,k) which sum to 0
 
         // naive solution: n^3, for each index -> look at all following, check if sum to 0
